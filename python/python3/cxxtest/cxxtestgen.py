@@ -361,7 +361,7 @@ def writeWorld( output ):
 def writeSuites(output):
     '''Write all TestDescriptions and SuiteDescriptions'''
     for suite in suites:
-        writeInclude( output, suite['file'] )
+        #writeInclude( output, suite['file'] )
         if isGenerated(suite):
             generateSuite( output, suite )
         if not options.noStaticInit:
