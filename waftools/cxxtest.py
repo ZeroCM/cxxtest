@@ -4,6 +4,7 @@ import re
 import copy
 from waflib import Task, Utils, Context, Logs
 from waflib import TaskGen
+from waflib import Options
 from waflib.Errors import WafError
 from waflib.Utils import subprocess
 from waflib.TaskGen import extension, feature
@@ -17,6 +18,8 @@ def configure(ctx):
 
     ctx.env.CXXTESTFLAGS_suite   = ['--error-printer', '--part']
     ctx.env.CXXTESTFLAGS_runner  = ['--error-printer', '--root']
+
+    ctx.env.SKIP_TESTS = Options.options.skip_tests
 
 @conf
 def check_cxxtest_version(ctx):
@@ -32,6 +35,10 @@ def check_cxxtest_version(ctx):
 
 @conf
 def cxxtest(ctx, **kw):
+
+    if ctx.env.SKIP_TESTS:
+        return
+
     # Check if the 'test' directory exists and if there are any tests in it
     if (ctx.path.find_dir('test') is None):
         return
