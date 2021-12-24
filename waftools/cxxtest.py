@@ -36,7 +36,7 @@ def check_cxxtest_version(ctx):
 @conf
 def cxxtest(ctx, **kw):
 
-    if ctx.env.SKIP_TESTS:
+    if ctx.env.SKIP_TESTS or Options.options.skip_tests:
         return
 
     # Check if the 'test' directory exists and if there are any tests in it
