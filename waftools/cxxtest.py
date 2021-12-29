@@ -19,7 +19,8 @@ def configure(ctx):
     ctx.env.CXXTESTFLAGS_suite   = ['--error-printer', '--part']
     ctx.env.CXXTESTFLAGS_runner  = ['--error-printer', '--root']
 
-    ctx.env.SKIP_TESTS = Options.options.skip_tests
+    opts = Options.options
+    ctx.env.SKIP_TESTS = opts.skip_tests if 'skip_tests' in vars(opts) else False
 
 @conf
 def check_cxxtest_version(ctx):
@@ -36,7 +37,9 @@ def check_cxxtest_version(ctx):
 @conf
 def cxxtest(ctx, **kw):
 
-    if ctx.env.SKIP_TESTS or Options.options.skip_tests:
+    opts = Options.options
+    skipTestOption = opts.skip_tests if 'skip_tests' in vars(opts) else False
+    if ctx.env.SKIP_TESTS or skipTestOption:
         return
 
     # Check if the 'test' directory exists and if there are any tests in it
