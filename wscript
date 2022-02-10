@@ -25,3 +25,6 @@ def build(ctx):
                           gitidNode,
                           cwd = ctx.srcnode,
                           relative_trick = True)
+
+    if ctx.variant == 'sign':
+        return
